@@ -26,6 +26,8 @@
   "homepage": "https://github.com/baseline-dev/tower#readme",
   "dependencies": {
     "@koa/router": "^9.0.1",
+    "debug": "^4.1.1",
+    "esm": "^3.2.25",
     "glob": "^7.1.6"
   },
   "devDependencies": {

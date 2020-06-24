@@ -1,6 +1,9 @@
 import glob from 'glob';
 import path from 'path';
 import Router from '@koa/router';
+import debug from 'debug';
+
+const log = debug('@baseline-dev:tower');
 
 function initRoutes(app, routeSrc) {
   const router = new Router();
@@ -9,7 +12,7 @@ function initRoutes(app, routeSrc) {
   });
 
   files.forEach((file) => {
-    const routes = require(path.join(process.cwd(), ROUTE_SRC, file));
+    const routes = require(path.join(process.cwd(), routeSrc, file));
     const basename = path.basename(file);
     let route = path.join('/', path.dirname(file));
     if (basename !== 'index.js') {
@@ -20,7 +23,7 @@ function initRoutes(app, routeSrc) {
       let handler = routes[method]();
       if (!Array.isArray(handler)) handler = [handler];
       if (method === 'destroy') method = 'delete';
-      console.log(`Mounting route ${method}:${route}`)
+      log(`Mounting route ${method}:${route}`)
       router[method].apply(router, [route].concat(handler));
     }
   });
