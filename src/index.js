@@ -20,14 +20,14 @@ function initRoutes(app, routeSrc) {
     }
     
     for (let method in routes) {
-      let handler = routes[method]();
-      if (!Array.isArray(handler)) handler = [handler];
-      if (method === 'destroy') method = 'delete';
-      log(`Mounting route ${method}:${route}`)
       try {
+        let handler = routes[method]();
+        if (!Array.isArray(handler)) handler = [handler];
+        if (method === 'destroy') method = 'delete';
+        log(`Mounting route ${method}:${route}`)
         router[method].apply(router, [route].concat(handler));
       } catch(e) {
-        throw new Error(`Could not mount route: ${method} ${route}.`);
+        throw new Error(`Could not mount route: ${method} ${route}. Please review the following file: ${file}`);
       }
     }
   });
