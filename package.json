@@ -1,0 +1,35 @@
+{
+  "name": "@baseline-dev/tower",
+  "version": "0.0.1",
+  "description": "File based routing.",
+  "main": "src/index.js",
+  "scripts": {
+    "test:unit": "tape --require esm src/**/*.test.js | tap-spec",
+    "coverage": "nyc npm run test:unit",
+    "release": "npm version patch",
+    "publish:npm": "npm run test:unit && npm run release && npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baseline-dev/tower.git"
+  },
+  "keywords": [
+    "Koa",
+    "router",
+    "directory"
+  ],
+  "author": "Nikolai Onken",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/baseline-dev/tower/issues"
+  },
+  "homepage": "https://github.com/baseline-dev/tower#readme",
+  "dependencies": {
+    "@koa/router": "^9.0.1",
+    "glob": "^7.1.6"
+  },
+  "devDependencies": {
+    "tap-spec": "^5.0.0",
+    "tape": "^5.0.1"
+  }
+}
