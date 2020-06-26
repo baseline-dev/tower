@@ -2,6 +2,7 @@ import glob from 'glob';
 import path from 'path';
 import Router from '@koa/router';
 import debug from 'debug';
+import assign from 'lodash.assign';
 
 const log = debug('@baseline-dev:tower');
 
@@ -10,7 +11,7 @@ function initRoutes(app, routeSrc, defaultProps = {}) {
     return async (ctx, next) => {
       ctx._render = ctx.render;
       ctx.render = async function(template, props) {
-        await ctx._render(template, _.assign(defaultProps, props));
+        await ctx._render(template, assign(defaultProps, props));
       };
       await next();
     }
