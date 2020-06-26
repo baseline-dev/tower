@@ -5,7 +5,17 @@ import debug from 'debug';
 
 const log = debug('@baseline-dev:tower');
 
-function initRoutes(app, routeSrc) {
+function initRoutes(app, routeSrc, defaultProps = {}) {
+  function renderContext() {
+    return async (ctx, next) => {
+      ctx._render = ctx.render;
+      ctx.render = async function(template, props) {
+        await ctx._render(template, _.assign(defaultProps, props));
+      };
+      await next();
+    }
+  }
+
   const router = new Router();
   const files = glob.sync('**/!(*.test).js', {
     cwd: routeSrc
@@ -25,7 +35,7 @@ function initRoutes(app, routeSrc) {
         if (!Array.isArray(handler)) handler = [handler];
         if (method === 'destroy') method = 'delete';
         log(`Mounting route ${method}:${route}`)
-        router[method].apply(router, [route].concat(handler));
+        router[method].apply(router, [route, renderContext()].concat(handler));
       } catch(e) {
         throw new Error(`Could not mount route: ${method} ${route}. Please review the following file: ${file}`);
       }
