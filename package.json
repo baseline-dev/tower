@@ -1,6 +1,6 @@
 {
   "name": "@baseline-dev/tower",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "File based routing.",
   "main": "src/index.js",
   "scripts": {
