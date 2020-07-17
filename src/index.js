@@ -33,7 +33,7 @@ function initRoutes(app, routeSrc, defaultProps = {}) {
   }
 
   const router = new Router();
-  const files = glob.sync('**/!(*.test|*.client).js', {
+  const files = glob.sync('**/!(*.test|*.client|*.html).js', {
     cwd: routeSrc
   });
 
